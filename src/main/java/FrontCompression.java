@@ -41,11 +41,36 @@ public class FrontCompression {
             return "";
         }
 
-        /*
-         * Complete this function.
-         */
+        String output = "";
 
-        return "";
+        Scanner scan = new Scanner(corpus);
+        String current;
+        String previous = "";
+        int prefixLength;
+
+        while (scan.hasNext()) {
+            current = scan.nextLine();
+            prefixLength = longestPrefix(current, previous);
+            output += prefixLength + " " + current.substring(prefixLength) + "\n";
+
+//            if (scan.hasNext()) {
+//                output += "\n";
+//            }
+
+            //DEBUG
+            //System.out.println(prefixLength + " " + current.substring(prefixLength));
+            //DEBUG
+
+            previous = current;
+        }
+
+        //DEBUG
+        //System.out.println("END OF COMPRESSION");
+        //DEBUG
+
+        scan.close();
+
+        return output;
     }
 
     /**
@@ -64,25 +89,63 @@ public class FrontCompression {
             return "";
         }
 
-        /*
-         * Complete this function.
-         */
+        String output = "";
 
-        return "";
+        Scanner scan = new Scanner(corpus);
+        String current;
+        String previous = "";
+        String currComplete;
+        String[] split;
+        int prefixLength;
+
+
+        while (scan.hasNext()) {
+            current = scan.nextLine();
+
+            //DEBUG
+            //System.out.println(current);
+            //DEBUG
+
+            split = current.split(" ");
+            prefixLength = Integer.parseInt(split[0]);
+            currComplete = previous.substring(0, prefixLength) + split[1];
+
+            output += currComplete + "\n";
+
+//            if (scan.hasNext()) {
+//                output += "\n";
+//            }
+
+            //DEBUG
+            //System.out.println(currComplete);
+            //DEBUG
+
+            previous = currComplete;
+        }
+
+        scan.close();
+        return output;
     }
 
     /**
      * Compute the length of the common prefix between two strings.
      *
-     * @param firstString the first string
-     * @param secondString the second string
+     * @param str1 the first string
+     * @param str2 the second string
      * @return the length of the common prefix between the two strings
      */
-    private static int longestPrefix(final String firstString, final String secondString) {
+    private static int longestPrefix(final String str1, final String str2) {
         /*
          * Complete this function.
          */
-        return 0;
+
+        int preLen = 0;
+        for (preLen = 0; preLen < str1.length() && preLen < str2.length(); preLen++) {
+            if (str1.charAt(preLen) != str2.charAt(preLen)) {
+                return preLen;
+            }
+        }
+        return preLen;
     }
 
     /**
